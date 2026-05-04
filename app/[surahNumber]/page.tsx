@@ -6,9 +6,9 @@ interface PageProps {
   params: Promise<{ surahNumber: string }>;
 }
 
-export async function generateStaticParams() {
-  const numbers = await getAllSurahNumbers();
-  return numbers.map((n: number) => ({ surahNumber: String(n) }));
+export function generateStaticParams() {
+  const numbers = getAllSurahNumbers();
+  return numbers.map((n) => ({ surahNumber: String(n) }));
 }
 
 export default async function SurahPage({ params }: PageProps) {
@@ -26,31 +26,15 @@ export default async function SurahPage({ params }: PageProps) {
     );
   }
 
-  const [surahs, surah] = await Promise.all([
-    getSurahs(),
-    getSurah(number),
-  ]);
+  const surahs = getSurahs();
+  const surah = getSurah(number);
 
   if (!surah) {
     return (
       <div className="flex h-screen items-center justify-center bg-theme-base">
         <div className="text-center space-y-3">
-          <p className="text-theme-primary font-semibold">Failed to load Surah {number}</p>
-          <p className="text-theme-secondary text-sm">The Quran API may be temporarily unavailable.</p>
-          <div className="flex items-center justify-center gap-3 pt-2">
-            <Link
-              href={`/${number}`}
-              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
-            >
-              Try again
-            </Link>
-            <Link
-              href="/1"
-              className="rounded-lg border border-theme px-4 py-2 text-sm font-medium text-theme-secondary hover:bg-theme-elevated transition-colors"
-            >
-              Go to Al-Fatihah
-            </Link>
-          </div>
+          <p className="text-theme-primary font-semibold">Surah {number} not found</p>
+          <Link href="/1" className="text-emerald-500 hover:underline text-sm">Go to Al-Fatihah</Link>
         </div>
       </div>
     );

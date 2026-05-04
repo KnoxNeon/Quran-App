@@ -1,59 +1,42 @@
 import type { SearchResultAyah } from "@/types/quran";
+import quranData from "@/src/data/quran.json";
+import type { SurahDetail } from "@/types/quran";
 
-const BASE_URL = "https://api.alquran.cloud/v1";
-
-interface RawAyah {
-  number: number;
-  numberInSurah: number;
-  text: string;
-  surah: {
-    number: number;
-    name: string;
-    englishName: string;
-  };
-}
+const surahs = (quranData as { surahs: SurahDetail[] }).surahs;
 
 /**
- * Search ayahs by English translation or Arabic text.
- * Uses alquran.cloud /search endpoint — no auth required.
+ * Search ayahs by Arabic text or English translation — fully offline.
+ * Detects Arabic input by checking for Arabic Unicode range.
  */
-export async function searchAyahs(query: string): Promise<SearchResultAyah[]> {
+export function searchAyahs(query: string): SearchResultAyah[] {
   if (!query.trim()) return [];
 
-  // Detect Arabic input by checking for Arabic Unicode range
+  const q = query.trim().toLowerCase();
   const isArabic = /[\u0600-\u06FF]/.test(query);
-  const edition = isArabic ? "quran-uthmani" : "en.sahih";
+  const results: SearchResultAyah[] = [];
 
-  const res = await fetch(
-    `${BASE_URL}/search/${encodeURIComponent(query)}/all/${edition}`,
-    { cache: "no-store" }
-  );
+  for (const surah of surahs) {
+    for (const ayah of surah.ayahs) {
+      const matches = isArabic
+        ? ayah.text.includes(query.trim())
+        : ayah.translation.toLowerCase().includes(q);
 
-  if (!res.ok) return [];
+      if (matches) {
+        results.push({
+          number: ayah.number,
+          numberInSurah: ayah.numberInSurah,
+          text: ayah.text,
+          translation: ayah.translation,
+          surahNumber: surah.number,
+          surahName: surah.name,
+          surahEnglishName: surah.englishName,
+        });
+      }
 
-  const json = await res.json();
-  const matches: RawAyah[] = json?.data?.matches ?? [];
-
-  // If searching English, also fetch Arabic text for each result
-  if (!isArabic) {
-    return matches.map((m) => ({
-      number: m.number,
-      numberInSurah: m.numberInSurah,
-      text: "",           // Arabic fetched lazily in UI if needed
-      translation: m.text,
-      surahNumber: m.surah.number,
-      surahName: m.surah.name,
-      surahEnglishName: m.surah.englishName,
-    }));
+      // Cap at 100 results for performance
+      if (results.length >= 100) return results;
+    }
   }
 
-  return matches.map((m) => ({
-    number: m.number,
-    numberInSurah: m.numberInSurah,
-    text: m.text,
-    translation: "",
-    surahNumber: m.surah.number,
-    surahName: m.surah.name,
-    surahEnglishName: m.surah.englishName,
-  }));
+  return results;
 }
