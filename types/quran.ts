@@ -17,3 +17,13 @@ export interface Ayah {
 export interface SurahDetail extends Surah {
   ayahs: Ayah[];
 }
+
+export interface SearchResultAyah {
+  number: number;          // global ayah number
+  numberInSurah: number;
+  text: string;            // Arabic
+  translation: string;     // English
+  surahNumber: number;
+  surahName: string;
+  surahEnglishName: string;
+}

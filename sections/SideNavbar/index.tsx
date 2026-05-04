@@ -3,11 +3,19 @@ import { SidebarNavMenu } from "@/sections/SideNavbar/components/SidebarNavMenu"
 
 export function SideNavbar() {
   return (
-    <nav className="fixed left-0 top-0 z-50 h-[60px] w-full bg-neutral-900 md:h-screen md:w-[60px] md:border-r md:border-neutral-800">
-      <div className="flex h-full w-full flex-row items-center justify-around md:flex-col md:justify-start md:items-center md:pt-4 md:gap-0">
-        <SidebarLogo />
-        <SidebarNavMenu />
-      </div>
-    </nav>
+    <>
+      {/* ── Desktop: fixed left rail (md+) ─────────────────────────── */}
+      <nav className="fixed left-0 top-0 z-50 hidden h-screen w-[60px] flex-col items-center border-r border-neutral-800 bg-neutral-900 md:flex">
+        <div className="flex h-full w-full flex-col items-center pt-4">
+          <SidebarLogo />
+          <SidebarNavMenu />
+        </div>
+      </nav>
+
+      {/* ── Mobile: fixed bottom bar ────────────────────────────────── */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t border-neutral-800 bg-neutral-900 md:hidden">
+        <SidebarNavMenu mobile />
+      </nav>
+    </>
   );
 }

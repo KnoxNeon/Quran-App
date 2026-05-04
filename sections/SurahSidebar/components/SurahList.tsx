@@ -8,9 +8,10 @@ import { SurahSearch } from "./SurahSearch";
 interface SurahListProps {
   surahs: Surah[];
   activeSurahNumber?: number;
+  onSelect?: () => void;
 }
 
-export function SurahList({ surahs, activeSurahNumber }: SurahListProps) {
+export function SurahList({ surahs, activeSurahNumber, onSelect }: SurahListProps) {
   const [query, setQuery] = useState("");
 
   const filtered = surahs.filter(
@@ -29,6 +30,7 @@ export function SurahList({ surahs, activeSurahNumber }: SurahListProps) {
             <li key={surah.number}>
               <Link
                 href={`/${surah.number}`}
+                onClick={onSelect}
                 className={`flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-neutral-800 ${
                   isActive ? "bg-neutral-800" : ""
                 }`}

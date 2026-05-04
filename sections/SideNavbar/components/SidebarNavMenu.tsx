@@ -4,9 +4,23 @@ interface NavItemProps {
   href: string;
   icon: string;
   label: string;
+  mobile?: boolean;
 }
 
-function NavItem({ href, icon, label }: NavItemProps) {
+function NavItem({ href, icon, label, mobile }: NavItemProps) {
+  if (mobile) {
+    return (
+      <Link
+        href={href}
+        aria-label={label}
+        className="flex flex-col items-center gap-0.5 px-3 py-1 text-neutral-400 hover:text-white transition-colors"
+      >
+        <span className="text-xl leading-none">{icon}</span>
+        <span className="text-[10px]">{label}</span>
+      </Link>
+    );
+  }
+
   return (
     <div className="relative group">
       <Link
@@ -16,26 +30,33 @@ function NavItem({ href, icon, label }: NavItemProps) {
       >
         {icon}
       </Link>
-
       {/* Tooltip */}
       <div className="pointer-events-none absolute left-full top-1/2 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-neutral-800 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
         {label}
-        {/* Arrow */}
         <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-neutral-800" />
       </div>
     </div>
   );
 }
 
-export function SidebarNavMenu() {
+const NAV_ITEMS = [
+  { href: "/",          icon: "🏠", label: "Home"      },
+  { href: "/quran",     icon: "📖", label: "Quran"     },
+  { href: "/prayer",    icon: "🙏", label: "Prayer"    },
+  { href: "/bookmarks", icon: "🔖", label: "Bookmarks" },
+  { href: "/profile",   icon: "👤", label: "Profile"   },
+  { href: "/settings",  icon: "⚙️", label: "Settings"  },
+];
+
+export function SidebarNavMenu({ mobile }: { mobile?: boolean }) {
   return (
-    <div className="flex flex-row gap-1 md:flex-col md:flex-1 md:px-2 md:py-4 md:gap-1">
-      <NavItem href="/"          icon="🏠" label="Home"      />
-      <NavItem href="/quran"     icon="📖" label="Quran"     />
-      <NavItem href="/prayer"    icon="🙏" label="Prayer"    />
-      <NavItem href="/bookmarks" icon="🔖" label="Bookmarks" />
-      <NavItem href="/profile"   icon="👤" label="Profile"   />
-      <NavItem href="/settings"  icon="⚙️" label="Settings"  />
+    <div className={mobile
+      ? "flex w-full items-center justify-around"
+      : "flex flex-col flex-1 px-2 py-4 gap-1"
+    }>
+      {NAV_ITEMS.map((item) => (
+        <NavItem key={item.href} {...item} mobile={mobile} />
+      ))}
     </div>
   );
 }

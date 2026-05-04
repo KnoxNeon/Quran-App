@@ -1,8 +1,7 @@
 import { SideNavbar } from "@/sections/SideNavbar";
 import { TopNavbar } from "@/sections/TopNavbar";
 import { MainContent } from "@/sections/MainContent";
-import { AudioPlayerProvider } from "@/lib/AudioPlayerContext";
-import { PlayBar } from "@/components/ui/PlayBar";
+import { ClientProviders } from "@/components/layout/ClientProviders";
 import type { Surah, SurahDetail } from "@/types/quran";
 
 interface AppLayoutProps {
@@ -12,23 +11,24 @@ interface AppLayoutProps {
 
 export default function AppLayout({ surahs, surah }: AppLayoutProps) {
   return (
-    <AudioPlayerProvider>
+    <ClientProviders>
       <div className="flex h-screen w-full overflow-hidden bg-neutral-950">
-        {/* Fixed left icon sidebar */}
+        {/* Left rail — desktop only (rendered inside SideNavbar) */}
         <SideNavbar />
 
-        {/* Main area offset for sidebar */}
-        <div className="flex flex-1 flex-col md:ml-[60px] overflow-hidden">
+        {/* Main column */}
+        <div className="flex flex-1 flex-col overflow-hidden md:ml-[60px]">
           <TopNavbar />
-          {/* Offset for fixed top navbar */}
-          <div className="flex flex-1 overflow-hidden pt-14">
+
+          {/* Content area:
+              - pt-14 to clear fixed TopNavbar
+              - pb-14 on mobile to clear fixed bottom nav
+              - pb-0 on md+ (no bottom nav) */}
+          <div className="flex flex-1 overflow-hidden pt-14 pb-14 md:pb-0">
             <MainContent surahs={surahs} surah={surah} />
           </div>
         </div>
-
-        {/* Fixed playbar — only visible when audio is active */}
-        <PlayBar />
       </div>
-    </AudioPlayerProvider>
+    </ClientProviders>
   );
 }
