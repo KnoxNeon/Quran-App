@@ -33,7 +33,10 @@ export function AyahCard({ ayah, surahNumber, surahName, globalAyahNumbers }: Ay
   }
 
   return (
-    <div className={`border-b border-neutral-800 py-6 transition-colors ${isThisAyahPlaying ? "bg-neutral-900/60" : ""}`}>
+    <div
+      id={`ayah-${ayah.numberInSurah}`}
+      className={`border-b border-neutral-800 py-6 transition-colors ${isThisAyahPlaying ? "bg-neutral-900/60" : ""}`}
+    >
       <div className="flex gap-4">
         {/* Ayah number + actions */}
         <div className="flex shrink-0 flex-col items-center gap-3 pt-1">

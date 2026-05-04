@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { House, LayoutGrid, Navigation, Bookmark, Grid2x2Plus } from "lucide-react";
 
 interface NavItemProps {
   href: string;
-  icon: string;
+  icon: React.ReactNode;
   label: string;
   mobile?: boolean;
 }
@@ -40,19 +41,18 @@ function NavItem({ href, icon, label, mobile }: NavItemProps) {
 }
 
 const NAV_ITEMS = [
-  { href: "/",          icon: "🏠", label: "Home"      },
-  { href: "/quran",     icon: "📖", label: "Quran"     },
-  { href: "/prayer",    icon: "🙏", label: "Prayer"    },
-  { href: "/bookmarks", icon: "🔖", label: "Bookmarks" },
-  { href: "/profile",   icon: "👤", label: "Profile"   },
-  { href: "/settings",  icon: "⚙️", label: "Settings"  },
+  { href: "/",          icon: <House />, label: "Home"      },
+  { href: "/quran",     icon: <LayoutGrid />, label: "Read Quran"     },
+  { href: "/prayer",    icon: <Navigation />, label: "Go to Ayah"    },
+  { href: "/bookmarks", icon: <Bookmark />, label: "Bookmark" },
+  { href: "/profile",   icon: <Grid2x2Plus />, label: "Others"   },
 ];
 
 export function SidebarNavMenu({ mobile }: { mobile?: boolean }) {
   return (
     <div className={mobile
       ? "flex w-full items-center justify-around"
-      : "flex flex-col flex-1 px-2 py-4 gap-1"
+      : "flex flex-col items-start justify-center flex-1 px-2 gap-4"
     }>
       {NAV_ITEMS.map((item) => (
         <NavItem key={item.href} {...item} mobile={mobile} />

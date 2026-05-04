@@ -5,8 +5,8 @@ export function BrandSection() {
         
         {/* Text Content */}
         <div className="flex flex-col">
-          <p className="text-lg font-bold leading-none text-white">Quran Mazid</p>
-          <p className="mt-1 text-xs text-neutral-400 hidden md:block">
+          <p className="text-xl font-bold leading-none text-white">Quran Mazid</p>
+        <p className="mt-1 text-xs text-neutral-500 hidden md:block">
             Read, Study, and Learn The Quran
           </p>
         </div>

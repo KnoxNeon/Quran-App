@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { SearchModal } from "@/components/ui/SearchModal";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { HeartPlus } from "lucide-react";
 
 export function TopNavBarActions() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -21,16 +23,18 @@ export function TopNavBarActions() {
           </svg>
         </button>
 
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
         {/* Support Us */}
         <button
           type="button"
           className="hidden items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-emerald-500 transition-colors md:flex"
         >
-          Support Us
+          Support Us <HeartPlus size={16} />
         </button>
       </div>
 
-      {/* Search modal — rendered here, no context needed */}
       {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </>
   );
