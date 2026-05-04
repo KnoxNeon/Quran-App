@@ -13,7 +13,7 @@ export function SettingsSidebar() {
   const [fontOpen, setFontOpen] = useState(true);
 
   return (
-    <div className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[280px] shrink-0 flex-col overflow-y-auto border-l border-neutral-800 bg-neutral-950 lg:flex">
+    <div className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[220px] shrink-0 flex-col overflow-y-auto border-l border-neutral-800 bg-neutral-950 lg:flex">
       {/* Translation / Reading tabs */}
       <div className="flex border-b border-neutral-800 px-4 pt-3">
         {(["translation", "reading"] as const).map((t) => (

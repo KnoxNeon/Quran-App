@@ -8,19 +8,26 @@ interface SurahContentProps {
 }
 
 export function SurahContent({ surah }: SurahContentProps) {
+  // Build the ordered list of global ayah numbers for this surah once.
+  // ayah.number is the global 1-6236 number from the API.
+  const globalAyahNumbers = surah.ayahs.map((a) => a.number);
+
   return (
     <div className="flex flex-1 flex-col min-h-screen">
-      {/* Surah Header */}
       <SurahHeader surah={surah} />
 
-      {/* Ayah list */}
-      <div className="flex-1 px-4 md:px-8 pb-8">
+      <div className="flex-1 px-4 md:px-8 pb-24">
         {surah.ayahs.map((ayah) => (
-          <AyahCard key={ayah.numberInSurah} ayah={ayah} surahNumber={surah.number} />
+          <AyahCard
+            key={ayah.numberInSurah}
+            ayah={ayah}
+            surahNumber={surah.number}
+            surahName={surah.englishName}
+            globalAyahNumbers={globalAyahNumbers}
+          />
         ))}
       </div>
 
-      {/* Prev / Next navigation */}
       <SurahNav current={surah.number} total={114} />
     </div>
   );

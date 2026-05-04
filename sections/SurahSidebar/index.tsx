@@ -9,7 +9,7 @@ interface SurahSidebarProps {
 
 export function SurahSidebar({ surahs, activeSurahNumber }: SurahSidebarProps) {
   return (
-    <div className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[160px] shrink-0 border-r border-neutral-800 bg-neutral-950 md:flex flex-col overflow-hidden">
+    <div className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[300px] shrink-0 border-r border-neutral-800 bg-neutral-950 md:flex flex-col overflow-hidden">
       {/* Tabs */}
       <SurahTabs />
 
