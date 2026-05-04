@@ -8,7 +8,7 @@ interface PageProps {
 // SSG — pre-render all 114 surah pages at build time
 export async function generateStaticParams() {
   const numbers = await getAllSurahNumbers();
-  return numbers.map((n) => ({ surahNumber: String(n) }));
+  return numbers.map((n: number) => ({ surahNumber: String(n) }));
 }
 
 export default async function SurahPage({ params }: PageProps) {
@@ -19,6 +19,10 @@ export default async function SurahPage({ params }: PageProps) {
     getSurahs(),
     getSurah(number),
   ]);
+
+  if (!surah) {
+    return <div className="p-8 text-theme-secondary">Failed to load surah {number}.</div>;
+  }
 
   return <AppLayout surahs={surahs} surah={surah} />;
 }

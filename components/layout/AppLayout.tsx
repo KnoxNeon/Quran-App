@@ -12,7 +12,7 @@ interface AppLayoutProps {
 export default function AppLayout({ surahs, surah }: AppLayoutProps) {
   return (
     <ClientProviders>
-      <div className="flex h-screen w-full overflow-hidden bg-neutral-950">
+      <div className="flex h-screen w-full overflow-hidden bg-theme-base">
         {/* Left rail — desktop only (rendered inside SideNavbar) */}
         <SideNavbar />
 

@@ -15,7 +15,7 @@ export function MainContent({ surahs, surah }: MainContentProps) {
       <SurahSidebar surahs={surahs} activeSurahNumber={surah.number} />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto bg-theme-base">
         <SurahContent surah={surah} />
       </main>
 

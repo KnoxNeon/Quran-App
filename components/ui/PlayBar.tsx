@@ -32,12 +32,12 @@ export function PlayBar() {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="fixed bottom-0 left-[60px] right-0 z-50 border-t border-neutral-800 bg-neutral-900">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-theme bg-theme-nav md:left-[60px]">
       {/* Progress bar */}
-      <div className="relative h-1 w-full bg-neutral-700">
+      <div className="relative h-1 w-full bg-theme-elevated">
         <div
-          className="absolute left-0 top-0 h-full bg-emerald-500 transition-all"
-          style={{ width: `${progress}%` }}
+          className="absolute left-0 top-0 h-full bg-emerald-500"
+          style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
         />
         <input
           type="range"
@@ -56,10 +56,10 @@ export function PlayBar() {
 
         {/* Left — Surah info */}
         <div className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate text-sm font-semibold text-white">
+          <span className="truncate text-sm font-semibold text-theme-primary">
             Surah {surahName}
           </span>
-          <span className="text-xs text-neutral-400">
+          <span className="text-xs text-theme-secondary">
             Ayah {currentAyah} of {totalAyahs} · #{surahNumber}
           </span>
         </div>
@@ -68,10 +68,11 @@ export function PlayBar() {
         <div className="flex items-center gap-2 md:gap-4">
           {/* Previous ayah */}
           <button
+            type="button"
             onClick={prevAyah}
             disabled={currentAyah <= 1}
             aria-label="Previous ayah"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-theme-secondary hover:bg-theme-elevated hover:text-theme-primary disabled:cursor-not-allowed disabled:opacity-30"
           >
             <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-3.99a1.125 1.125 0 010-1.953l7.108-3.99A1.125 1.125 0 0121 8.689v8.122zM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-3.99a1.125 1.125 0 010-1.953l7.108-3.99a1.125 1.125 0 011.683.977v8.122z" />
@@ -80,9 +81,10 @@ export function PlayBar() {
 
           {/* Play / Pause */}
           <button
+            type="button"
             onClick={isPlaying ? pause : resume}
             aria-label={isPlaying ? "Pause" : "Play"}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg transition-colors hover:bg-emerald-500 active:scale-95"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500 active:scale-95"
           >
             {isPlaying ? (
               <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -97,10 +99,11 @@ export function PlayBar() {
 
           {/* Next ayah */}
           <button
+            type="button"
             onClick={nextAyah}
             disabled={currentAyah >= totalAyahs}
             aria-label="Next ayah"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-theme-secondary hover:bg-theme-elevated hover:text-theme-primary disabled:cursor-not-allowed disabled:opacity-30"
           >
             <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 3.99a1.125 1.125 0 010 1.953L4.683 17.643C3.933 18.072 3 17.53 3 16.666V8.69zM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 3.99a1.125 1.125 0 010 1.953l-7.108 3.99c-.75.43-1.683-.112-1.683-.977V8.69z" />
@@ -110,17 +113,17 @@ export function PlayBar() {
 
         {/* Right — Time + close */}
         <div className="flex flex-1 items-center justify-end gap-3">
-          <span className="text-xs tabular-nums text-neutral-400">
+          <span className="text-xs tabular-nums text-theme-secondary">
             {formatTime(currentTime)}
-            <span className="mx-1 text-neutral-600">/</span>
+            <span className="mx-1 text-theme-muted">/</span>
             {formatTime(duration)}
           </span>
 
-          {/* Close */}
           <button
+            type="button"
             onClick={close}
             aria-label="Close player"
-            className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-theme-muted hover:bg-theme-elevated hover:text-theme-primary"
           >
             <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

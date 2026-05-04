@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { FontSettingsProvider } from "@/lib/FontSettingsContext";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Quran App",
   description: "A beautiful Quran reading application",
 };
 
-// Runs before React hydration — prevents flash of wrong theme
 const themeInitScript = `
 (function() {
   try {
@@ -29,11 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Theme init — must be first to prevent flash */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -41,7 +45,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased">
+      <body className={`${inter.variable} font-sans antialiased`}>
         <FontSettingsProvider>
           {children}
         </FontSettingsProvider>
