@@ -1,8 +1,10 @@
+/* Google Fonts are loaded via <link> in app/layout.tsx */
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {

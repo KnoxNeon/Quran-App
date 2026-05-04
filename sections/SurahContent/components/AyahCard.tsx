@@ -2,6 +2,7 @@
 
 import type { Ayah } from "@/types/quran";
 import { useAudioPlayerContext } from "@/lib/AudioPlayerContext";
+import { useFontSettings, ARABIC_FONT_FAMILY } from "@/lib/FontSettingsContext";
 
 interface AyahCardProps {
   ayah: Ayah;
@@ -13,6 +14,7 @@ interface AyahCardProps {
 
 export function AyahCard({ ayah, surahNumber, surahName, globalAyahNumbers }: AyahCardProps) {
   const { playAyah, pause, isPlaying, currentAyah, surahNumber: activeSurah } = useAudioPlayerContext();
+  const { arabicFont, arabicSize, translationSize } = useFontSettings();
 
   const isThisAyahPlaying =
     isPlaying && activeSurah === surahNumber && currentAyah === ayah.numberInSurah;
@@ -80,9 +82,14 @@ export function AyahCard({ ayah, surahNumber, surahName, globalAyahNumbers }: Ay
 
         {/* Content */}
         <div className="flex-1 min-w-0">
+          {/* Arabic text */}
           <p
-            className="mb-4 text-right font-arabic leading-loose text-white"
-            style={{ fontSize: "1.6rem", direction: "rtl" }}
+            className="mb-4 text-right leading-loose text-white"
+            style={{
+              fontFamily: ARABIC_FONT_FAMILY[arabicFont],
+              fontSize: `${arabicSize}px`,
+              direction: "rtl",
+            }}
             lang="ar"
           >
             {ayah.text}
@@ -92,7 +99,7 @@ export function AyahCard({ ayah, surahNumber, surahName, globalAyahNumbers }: Ay
             Saheeh International
           </p>
 
-          <p className="text-sm leading-relaxed text-neutral-300">
+          <p className="leading-relaxed text-neutral-300" style={{ fontSize: `${translationSize}px` }}>
             {ayah.translation}
           </p>
         </div>
